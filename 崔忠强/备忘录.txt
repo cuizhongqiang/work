@@ -1,0 +1,101 @@
+技术部开发体系包括三个研发部（云管平台-时孝全、AI与大数据-吴振刚、开发平台-王伟）、需求与质量部-韩芳、工程开发部
+中建信息ERP系统地址：http://cdwp.cnbmxinyun.com/login.html
+邮箱地址：http://mail.cnbmtech.com/
+邮箱：cuizhongqiang@cnbmtech.com 密码：cuizq540.
+Exmobi企业版服务平台：http://miap.cc:1001/main.action
+					：http://192.168.2.238:8001/main.action
+开发者网址：
+	https://developer.apple.com/
+苹果账号：
+	APPLE账号：mydazongwang@163.com 
+	APPLE密码：DZ18@cbmie
+中建信息禅道：https://cnbmtech.5upm.com/	密码：Czq123	用户名：wangwei05	密码：Wangwei123
+手机端外网IP：123.124.254.139
+APPLE ID: 1312130479@qq.com	CUIzq540
+
+虚拟机：192.168.1.161 Administrator Huizheng2 2.144 administrator win_2008
+
+手机端基座外网IP	正式：123.124.254.215
+					测试：123.124.254.139
+					
+手机端测试环境：http://192.168.2.238:8001/main.action
+				用户名：admin
+				密  码：admin111
+手机端正式环境：http://192.168.2.225:8001/main.action
+
+
+私有库地址：http://192.168.1.111:8081/nexus/content/groups/public/ 用户名admin，密码admin123
+      目录：/usr/local/nexus/sonatype-work/nexus/storage/central/org/eclipse/birt
+	  
+陆海ERP SVN:1.https://192.168.1.184/svn/woodNz/code/jeecbmie
+			2.https://192.168.1.184/svn/luhai/code/
+陆海birt报表环境：192.168.2.102 用户root/密码luhai_test
+	url：http://192.168.2.102:8080/jeecbmie-report-birt/frameset?__report=report/personApplySimple.rptdesign&__title=Birt+Report&__showtitle=false&__parameterpage=false
+
+陆海SSH：1.135 密码cnbmhr$%531
+		 2.104 密码luhai_Formal
+供应链：jenkins	http://192.168.1.132:9200/view/supply/job/supply_pro/	admin / cnbm123456
+		SSH: 192.168.1.133	root / luhai_Formal
+		手机端:http://123.124.254.195:8083/appDownLoad/
+			测试：/usr/local/apache-tomcat-7.0.70-supply-test2/webapps/www
+			正式:/usr/local/apache-tomcat-7.0.70-supply-pro/webapps/www
+短信：http://192.168.1.132/g2/jiguangMS.git
+		您好！极光账号已变更。登陆地址：https://www.jiguang.cn/accounts/login/form
+		登陆账号：developer@cnbmxinyun.com
+		登陆密码：CNBMxinyun2018
+
+会议室预约：http://meeting.cnbmxinyun.com/#/login
+Portal管理：http://123.124.254.168:6001/	http://192.168.1.107:7023/view/main.html  GitLab:http://123.124.254.170:70/portal
+			http://192.168.1.107:8006
+			正式库：root\cnbm123456 telnet:root\Ora&*1234
+通用平台组：GitLab http://192.168.1.132/microarch 用户名和密码：cuizhongqiang
+			205.65:testsrv	123456
+			1.174:root root_portal
+			外网环境SSH：49.4.71.119 root/4IAeRNxDCw7DPYF
+			http://49.4.83.154/#/home
+			
+			oracle数据库环境：49.4.71.119  sys / ASD_sys123
+						SSH: root / 4IAeRNxDCw7DPYF
+人力资源：https://192.168.1.184/svn/cnbmhrnew	sjl sjl123
+		  正式环境：admin/cnbmhradmin_6805
+		  
+support:http://192.168.1.220:7000/arch/entry/login.jsp	1234
+
+git：
+	$ git add . && git commit -a -m "update"
+	$ git push
+	git reset --hard
+	git remote set-url origin http://用户名@地址--远程仓库重定向
+	git remote add origin http://用户名@地址--增加远程仓库
+
+项目管理：
+截止本周工时投入情况（每个人、汇总、消耗百分比）
+本周项目组成员任务完成情况
+问题（需求、技术、客户）
+下周实施计划
+
+给客户发简报，包括本周工作完成情况，下周计划及需要客户协助解决的问题，列明哪些待确认的事项会影响项目实施
+版本：E:\repository\com\cbmie\jeecbmie\jeecbmie-luhai-webapp
+
+Linux:
+	sudo service mysql stop
+	sudo service mysql start
+	kill -9 
+	chmod +x 777
+
+VUE深度监听:
+watch:{
+    easyTableData:{
+        handler(val, oldVal){
+            console.log(val);
+            this.easyTableData = val;
+        },
+        deep:true
+    }
+
+}
+全局更新：npm install npm -g 
+打印：npm install vue-print-nb --save
+i18n：npm install vue-i18n
+
+日期、项目、问题、报备人员、人天

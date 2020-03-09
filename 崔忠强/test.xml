@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="RegularInternship" name="试用期转正" isExecutable="true">
+    <startEvent id="start" name="开始">
+      <documentation>4C8DBB4B-EB20-4CAC-BFEB-8759DAE89922</documentation>
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.cnbmtech.activiti.listener.ActivitiStartListener"/>
+      </extensionElements>
+    </startEvent>
+    <userTask id="apply" name="转正申请单">
+      <documentation>BBBF079C-1656-4FF2-A45E-7298B35B9C03</documentation>
+      <extensionElements>
+        <activiti:taskListener event="create" class="com.cnbmtech.activiti.listener.ActivitiUserTaskListener"/>
+        <activiti:taskListener event="complete" class="com.cnbmtech.activiti.listener.ActivitiUserTaskListener"/>
+        <activiti:taskListener event="delete" class="com.cnbmtech.activiti.listener.ActivitiUserTaskListener"/>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="sid-FEDF9477-764B-4069-BBF8-AFDEA0D03FB1" sourceRef="start" targetRef="apply"/>
+    <userTask id="sid-CC269A26-0CDE-4B17-867C-842992F6D231" name="用人部门主要负责人审批">
+      <documentation>5F43C1EE-BB77-4C7F-988C-07404022BF99</documentation>
+      <extensionElements>
+        <activiti:taskListener event="create" class="com.cnbmtech.activiti.listener.ActivitiUserTaskListener"/>
+        <activiti:taskListener event="complete" class="com.cnbmtech.activiti.listener.ActivitiUserTaskListener"/>
+        <activiti:taskListener event="delete" class="com.cnbmtech.activiti.listener.ActivitiUserTaskListener"/>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="sid-EAA4A204-70DE-4142-8743-636706C4E4B0" sourceRef="apply" targetRef="sid-CC269A26-0CDE-4B17-867C-842992F6D231"/>
+    <endEvent id="end" name="结束">
+      <documentation>23430084-2B0F-4D24-B93F-FBFF7D01457A</documentation>
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.cnbmtech.activiti.listener.ActivitiEndListener"/>
+      </extensionElements>
+    </endEvent>
+    <sequenceFlow id="sid-F4300765-114D-433D-A136-D14F96D6DD66" sourceRef="sid-CC269A26-0CDE-4B17-867C-842992F6D231" targetRef="end"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_RegularInternship">
+    <bpmndi:BPMNPlane bpmnElement="RegularInternship" id="BPMNPlane_RegularInternship">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="30.0" width="30.0" x="694.7833333333333" y="518.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="apply" id="BPMNShape_apply">
+        <omgdc:Bounds height="80.0" width="100.0" x="800.0" y="493.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-CC269A26-0CDE-4B17-867C-842992F6D231" id="BPMNShape_sid-CC269A26-0CDE-4B17-867C-842992F6D231">
+        <omgdc:Bounds height="80.0" width="100.0" x="980.0" y="493.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="28.0" width="28.0" x="1160.0" y="519.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-EAA4A204-70DE-4142-8743-636706C4E4B0" id="BPMNEdge_sid-EAA4A204-70DE-4142-8743-636706C4E4B0">
+        <omgdi:waypoint x="900.0" y="533.0"/>
+        <omgdi:waypoint x="980.0" y="533.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-F4300765-114D-433D-A136-D14F96D6DD66" id="BPMNEdge_sid-F4300765-114D-433D-A136-D14F96D6DD66">
+        <omgdi:waypoint x="1080.0" y="533.0"/>
+        <omgdi:waypoint x="1160.0" y="533.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-FEDF9477-764B-4069-BBF8-AFDEA0D03FB1" id="BPMNEdge_sid-FEDF9477-764B-4069-BBF8-AFDEA0D03FB1">
+        <omgdi:waypoint x="724.7833333333333" y="533.0"/>
+        <omgdi:waypoint x="800.0" y="533.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

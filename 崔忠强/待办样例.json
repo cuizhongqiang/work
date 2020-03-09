@@ -1,0 +1,30 @@
+{
+	"taskId": 62514,
+	"info": {
+		"activityId": "sid-E7D18787-9F79-4A61-A97F-005B51D54500",
+		"businessInfo": "差旅费用报销申请 【admin 997元】",
+		"businessKey": "678291596776570880",
+		"businessUrl": "sys/sysorder/orderTabs?page:edit,sys/sysorder/orderTabs?page:view",
+		"candidate": "liuhu",
+		"createTime": 1582014160890,
+		"id": "62514",
+		"name": "总经理审批",
+		"pid": "47501",
+		"priority": "50",
+		"processDefKey": "oneLine",
+		"processDefName": "oneLine",
+		"processDefVersion": 1,
+		"startUser": "管理员",
+		"startUserId": "admin",
+		"status": "待签收",
+		"woCode": "workOrder",
+		"woName": "工单流程测试"
+	},
+	"sourceName": "集团统一门户",
+	"sourceCode": "jtportal",
+	"taskUrl": "/activiti/task/waitfor/62514",
+	"taskType": "toDo",
+	"attribute1": null,
+	"attribute2": null,
+	"attribute3": null
+}

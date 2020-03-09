@@ -1,0 +1,32 @@
+{
+	"taskId": 62509,
+	"info": {
+		"activityId": "sid-E3C74D95-8529-4304-B8AA-120FA6007783",
+		"assignee": "wanghaizhou",
+		"businessInfo": "差旅费用报销申请 【admin 997元】",
+		"businessKey": "678291596776570880",
+		"businessUrl": "sys/sysorder/orderTabs?page:edit,sys/sysorder/orderTabs?page:view",
+		"callBack": "true",
+		"claimTime": 1582014160577,
+		"configFormKey": "",
+		"currentActivityName": "总经理审批(刘虎)",
+		"endTime": 1582014160874,
+		"id": "62509",
+		"pid": "47501",
+		"priority": "50",
+		"procDefId": "oneLine:1:5009",
+		"showHisApprovalStatus": true,
+		"startTime": 1582013407302,
+		"startUser": "admin",
+		"startUserName": "管理员",
+		"taskId": "62514",
+		"taskType": "transated"
+	},
+	"sourceName": "集团统一门户",
+	"sourceCode": "jtportal",
+	"taskUrl": "/activiti/task/transated/62509",
+	"taskType": "haveDone",
+	"attribute1": null,
+	"attribute2": null,
+	"attribute3": null
+}

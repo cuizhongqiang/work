@@ -14,8 +14,8 @@ SELECT
 	u.LAST_ AS start_user,
 	rt.NAME_ AS NAME,
 	rt.TASK_DEF_KEY_ AS ACTIVITY_ID,
-	rt.ASSIGNEE_ AS ASSIGNEE,
-	ri.USER_ID AS CANDIDATE,
+	ifnull(rt.ASSIGNEE_, '') AS ASSIGNEE,
+	ifnull(ri.USER_ID, '') AS CANDIDATE,
 	rp.KEY_ as PROCESS_DEF_KEY,
 	rp.NAME_ as PROCESS_DEF_NAME,
 	rp.VERSION_ as PROCESS_DEF_VERSION,
@@ -23,32 +23,22 @@ SELECT
 	rm.WO_NAME as WO_NAME,
 	rm.WO_URL as BUSINESS_URL,
 	'waitfor' as TASK_TYPE,
-	(
-	CASE
-		WHEN (isnull ( rt.ASSIGNEE_ ) AND isnull ( ri.USER_ID )) THEN '' 
-		WHEN ( rt.ASSIGNEE_ IS NOT NULL ) THEN '已签收' 
-		ELSE '待签收' 
-	END 
-	) AS status,
+	if(rt.ASSIGNEE_ is null, '待签收', '已签收') AS status,
 	rt.CREATE_TIME_ AS CREATE_TIME,
 	rt.DUE_DATE_ AS DUE_DATE 
 FROM
 	act_ru_task rt 
 	left join (
-	
 		SELECT
 			i.TASK_ID_ AS TASK_ID_,
 			i.USER_ID_ AS USER_ID 
 		FROM
 			 act_ru_identitylink i join act_ru_task t on i.TASK_ID_ = t.ID_
 		WHERE
-			(
-				i.TASK_ID_ IS NOT NULL 
-				AND ( i.USER_ID_ IS NOT NULL ) 
-				AND isnull ( t.ASSIGNEE_ ) 
-				AND ( i.TYPE_ = 'candidate' )
-			)
-		
+			i.TASK_ID_ IS NOT NULL 
+			AND ( i.USER_ID_ IS NOT NULL ) 
+			AND isnull ( t.ASSIGNEE_ ) 
+			AND ( i.TYPE_ = 'candidate' )
 	) ri ON rt.ID_ = ri.TASK_ID_ 
 	left join act_hi_procinst hp ON rt.PROC_INST_ID_ = hp.PROC_INST_ID_ 
 	left join act_re_procdef rp on rt.PROC_DEF_ID_ = rp.ID_ 
@@ -72,7 +62,7 @@ SELECT
 	nft.task_name AS NAME,
 	null AS ACTIVITY_ID,
 	nft.assignee AS ASSIGNEE,
-	null AS CANDIDATE,
+	'' AS CANDIDATE,
 	null as PROCESS_DEF_KEY,
 	null as PROCESS_DEF_NAME,
 	null as PROCESS_DEF_VERSION,
@@ -80,12 +70,7 @@ SELECT
 	nft.wo_name as WO_NAME,
 	nft.business_url as BUSINESS_URL,
 	'noflow' as TASK_TYPE,
-	(
-	CASE  
-		WHEN ( nft.status_ = 1 ) THEN '已签收' 
-		ELSE '待签收' 
-	END 
-	) AS status,
+	if(nft.status_ = 1, '已签收', '待签收') AS status,
 	nft.create_time AS CREATE_TIME,
 	nft.due_date AS DUE_DATE 
 FROM
@@ -106,8 +91,8 @@ SELECT
 	u.LAST_ AS start_user,
 	rt.NAME_ AS NAME,
 	rt.TASK_DEF_KEY_ AS ACTIVITY_ID,
-	rt.ASSIGNEE_ AS ASSIGNEE,
-	ri.USER_ID AS CANDIDATE,
+	NVL(rt.ASSIGNEE_, '') AS ASSIGNEE,
+	NVL(ri.USER_ID, '') AS CANDIDATE,
 	rp.KEY_ as PROCESS_DEF_KEY,
 	rp.NAME_ as PROCESS_DEF_NAME,
 	rp.VERSION_ as PROCESS_DEF_VERSION,
@@ -115,13 +100,7 @@ SELECT
 	rm.WO_NAME as WO_NAME,
 	rm.WO_URL as BUSINESS_URL,
 	'waitfor' as TASK_TYPE,
-	(
-	CASE	
-		WHEN ( rt.ASSIGNEE_ IS NULL AND ri.USER_ID IS NULL ) THEN '' 
-		WHEN ( rt.ASSIGNEE_ IS NOT NULL ) THEN '已签收' 
-		ELSE '待签收' 
-	END 
-	) AS STATUS,
+	decode(rt.ASSIGNEE_, null, '待签收', '已签收') AS STATUS,
 	rt.CREATE_TIME_ AS CREATE_TIME,
 	rt.DUE_DATE_ AS DUE_DATE 
 FROM
@@ -133,12 +112,10 @@ FROM
 		FROM
 			 act_ru_identitylink i JOIN act_ru_task t on i.TASK_ID_ = t.ID_
 		WHERE
-			(
-				( i.TASK_ID_ IS NOT NULL ) 
-				AND ( i.USER_ID_ IS NOT NULL ) 
-				AND t.ASSIGNEE_ IS NULL 
-				AND ( i.TYPE_ = 'candidate' ) 
-			)
+			( i.TASK_ID_ IS NOT NULL ) 
+			AND ( i.USER_ID_ IS NOT NULL ) 
+			AND t.ASSIGNEE_ IS NULL 
+			AND ( i.TYPE_ = 'candidate' ) 
 	) ri ON rt.ID_ = ri.TASK_ID_ 
 	LEFT JOIN act_hi_procinst hp ON rt.PROC_INST_ID_ = hp.PROC_INST_ID_
 	left join act_re_procdef rp on rt.PROC_DEF_ID_ = rp.ID_ 
@@ -162,7 +139,7 @@ SELECT
 	nft.task_name AS NAME,
 	null AS ACTIVITY_ID,
 	nft.assignee AS ASSIGNEE,
-	null AS CANDIDATE,
+	'' AS CANDIDATE,
 	null as PROCESS_DEF_KEY,
 	null as PROCESS_DEF_NAME,
 	null as PROCESS_DEF_VERSION,
@@ -170,12 +147,7 @@ SELECT
 	nft.wo_name as WO_NAME,
 	nft.business_url as BUSINESS_URL,
 	'noflow' as TASK_TYPE,
-	(
-	CASE  
-		WHEN ( nft.status_ = 1 ) THEN '已签收' 
-		ELSE '待签收' 
-	END 
-	) AS status,
+	decode(nft.status_, 1, '已签收', '待签收') AS STATUS,
 	nft.create_time AS CREATE_TIME,
 	nft.due_date AS DUE_DATE 
 FROM
@@ -213,7 +185,8 @@ INNER JOIN (
 		and 
 		ASSIGNEE_ is not NULL 
 		-- and ID_ not in (select c.TASK_ID_ from act_hi_comment c where t.ID_ = c.TASK_ID_ and c.TYPE_ = 'option' and c.MESSAGE_ = '自动审批') 
-		GROUP BY PROC_INST_ID_,ASSIGNEE_) t_hi_max on t_hi.ID_ = t_hi_max.ID_
+		GROUP BY PROC_INST_ID_,ASSIGNEE_
+) t_hi_max on t_hi.ID_ = t_hi_max.ID_
 
 LEFT JOIN act_hi_procinst p_hi on t_hi.PROC_INST_ID_ = p_hi.PROC_INST_ID_
 left join act_id_user u ON p_hi.START_USER_ID_ = convert( u.ID_ using utf8 )
@@ -258,8 +231,16 @@ SELECT
 	'transated' as task_type
 FROM 
 	act_hi_taskinst t_hi 
-INNER JOIN (SELECT PROC_INST_ID_,ASSIGNEE_,MAX(ID_) ID_ FROM act_hi_taskinst WHERE END_TIME_ is not null and to_char(DELETE_REASON_) = 'completed' 
-and ASSIGNEE_ is not NULL GROUP BY PROC_INST_ID_,ASSIGNEE_) t_hi_max on t_hi.ID_ = t_hi_max.ID_
+INNER JOIN (
+	SELECT PROC_INST_ID_,ASSIGNEE_,MAX(ID_) ID_ FROM act_hi_taskinst WHERE 
+		END_TIME_ is not null 
+		and 
+		to_char(DELETE_REASON_) = 'completed' 
+		and 
+		ASSIGNEE_ is not NULL 
+		GROUP BY PROC_INST_ID_,ASSIGNEE_
+) t_hi_max on t_hi.ID_ = t_hi_max.ID_
+
 LEFT JOIN act_hi_procinst p_hi on t_hi.PROC_INST_ID_ = p_hi.PROC_INST_ID_
 LEFT JOIN act_id_user u ON p_hi.START_USER_ID_ = to_char ( u.ID_ )
 union
